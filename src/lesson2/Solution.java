@@ -49,6 +49,9 @@ public class Solution {
 
     //Задание №6
     private static boolean isBalanced(int[] array) {
+        if (array == null || array.length == 0) //проверка на пустоту
+            return false;
+
         int sumLeft;
         int sumRight;
         for (int i = 0; i < array.length - 1; i++) {
@@ -63,8 +66,28 @@ public class Solution {
             if (sumLeft == sumRight)
                 return true;
         }
-
         return false;
     }
 
+    //Задание №7
+    private static void moveNumbers(int[] array, int pos) {
+        if (pos == 0)
+            return;
+        else if (pos < 0)
+            for (int i = 0; i < -pos; i++) {
+                int buf = array[0];
+                for (int j = 1; j < array.length; j++) {
+                        array[j - 1] = array[j];
+                }
+                array[array.length - 1] = buf;
+            }
+        else if (pos > 0)
+            for (int i = 0; i < pos; i++) {
+                int buf = array[array.length - 1];
+                for (int j = array.length - 1; j > 0; j--) {
+                    array[j] = array[j - 1];
+                }
+                array[0] = buf;
+            }
+    }
 }
