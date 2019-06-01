@@ -8,5 +8,12 @@ public class Solution {
         for (int i = 0; i < array.length; i++) {
             array[i] = (array[i] == 0) ? 1 : 0;
         }
+
+        //Задание №2
+        int[] array2 = new int[8];
+
+        for (int i = 0; i < array2.length; i++) {
+            array2[i] = i * 3;
+        }
     }
 }
