@@ -23,5 +23,16 @@ public class Solution {
             if (array3[i] < 6)
                 array3[i] *= 2;
         }
+
+        //Задание 4
+        int arraySize = 7;
+        int[][] array4 = new int[arraySize][arraySize];
+
+        for (int i = 0; i < array4.length; i++) {
+            for (int j = 0; j < array4.length; j++) {
+                if ((i == j) || (i == array4.length - j - 1))
+                    array4[i][j] = 1;
+            }
+        }
     }
 }
