@@ -46,4 +46,25 @@ public class Solution {
                 max = array5[i];
         }
     }
+
+    //Задание №6
+    private static boolean isBalanced(int[] array) {
+        int sumLeft;
+        int sumRight;
+        for (int i = 0; i < array.length - 1; i++) {
+            sumLeft = 0;
+            sumRight = 0;
+            for (int j = 0; j < array.length; j++) {
+                if (j <= i)
+                    sumLeft += array[j];
+                else
+                    sumRight += array[j];
+            }
+            if (sumLeft == sumRight)
+                return true;
+        }
+
+        return false;
+    }
+
 }
