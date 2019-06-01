@@ -24,7 +24,7 @@ public class Solution {
                 array3[i] *= 2;
         }
 
-        //Задание 4
+        //Задание №4
         int arraySize = 7;
         int[][] array4 = new int[arraySize][arraySize];
 
@@ -33,6 +33,17 @@ public class Solution {
                 if ((i == j) || (i == array4.length - j - 1))
                     array4[i][j] = 1;
             }
+        }
+
+        //Задание №5
+        int[] array5 = {1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
+        int min = array5[0];
+        int max = array5[0];
+        for (int i = 1; i < array5.length; i++) {
+            if (array5[i] < min)
+                min = array5[i];
+            if (array5[i] > max)
+                max = array5[i];
         }
     }
 }
