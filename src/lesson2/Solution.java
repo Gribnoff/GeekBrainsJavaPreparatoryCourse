@@ -1,6 +1,6 @@
 package lesson2;
 
-public class Solution {
+class Solution {
     private static void printArray(int[] array) {
         for (int i = 0; i < array.length; i++) {
             System.out.print(array[i] + " ");

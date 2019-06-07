@@ -1,6 +1,6 @@
 package lesson1;
 
-public class Solution {
+class Solution {
     //пункт №1
     public static void main(String[] args) {
         //пункт №2
