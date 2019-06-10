@@ -1,12 +1,11 @@
 package lesson5;
 
-class Cat{
-    private String name;
+class Cat extends Animal {
     private int stomach;
     boolean isFull;
 
     Cat(String name, int stomach) {
-        this.name = name;
+        super("Кот", name);
         this.stomach = stomach;
         isFull = false;
     }
@@ -24,8 +23,10 @@ class Cat{
         isFull = true;
     }
 
-    @Override
-    public String toString() {
-        return "Кот " + name;
+    private static int averageRunDist = 200;
+    private static int averageJumpHeight = 2;
+
+    public Cat(String name) {
+        super("Кот", name, (averageRunDist / 2) + (int)(Math.random() * averageRunDist), 0, (averageJumpHeight / 2) + (Math.random() * averageJumpHeight));
     }
 }

@@ -9,8 +9,12 @@ public class Bowl {
         fill();
     }
 
-    public int checkFood() {
-        return foodIn;
+    void info() {
+        System.out.println("В миске осталось " + foodIn + " еды");
+    }
+
+    boolean checkFood(int food) {
+        return food >= foodIn;
     }
 
     void fill() {
@@ -20,7 +24,7 @@ public class Bowl {
     }
 
     void takeFood(int quantity) {
-        if (quantity > foodIn) {
+        if (!checkFood(quantity)) {
             System.out.println("В миске мало еды!");
             fill();
         }

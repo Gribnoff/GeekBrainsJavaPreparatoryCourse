@@ -1,6 +1,6 @@
 package lesson5;
 
-public class CatFeeding {
+class CatFeeding {
     public static void main(String[] args) {
         Cat[] cats = {
                 new Cat("Васька", 10),
