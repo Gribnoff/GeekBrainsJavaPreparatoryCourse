@@ -9,7 +9,7 @@ public class GameActionListener implements ActionListener {
     private int coll;
     private GameButton button;
 
-    public GameActionListener(int row, int coll, GameButton button) {
+    GameActionListener(int row, int coll, GameButton button) {
         this.row = row;
         this.coll = coll;
         this.button = button;
@@ -19,17 +19,13 @@ public class GameActionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         GameBoard board = button.getBoard();
 
-        if (board.isTurnable(row, coll)) {
+        if (board.isValid(row, coll)) {
             updateByPlayerData(board);
-            if (board.isFull()) {
-                board.getGame().showMessage("Ничья");
-                board.emptyField();
-            } else {
+            if (board.isFull()) board.getGame().showMessage("Ничья");
+            else if (!button.getBoard().getGame().isEndGame())
                 updateByAIData(board);
-            }
-        } else {
+        } else
             board.getGame().showMessage("Некорректный ход!");
-        }
     }
 
     private void updateByPlayerData(GameBoard board) {
@@ -38,7 +34,7 @@ public class GameActionListener implements ActionListener {
 
         if (board.checkWin()) {
             button.getBoard().getGame().showMessage("Вы выиграли");
-            board.emptyField();
+            button.getBoard().getGame().setEndGame();
         } else {
             board.getGame().passTurn();
         }
@@ -51,17 +47,16 @@ public class GameActionListener implements ActionListener {
         do {
             x = random.nextInt(GameBoard.dimension);
             y = random.nextInt(GameBoard.dimension);
-        } while (!board.isTurnable(x, y));
+        } while (!board.isValid(x, y));
 
         board.updateGameField(x, y);
 
         int cellIndex = GameBoard.dimension * x + y;
         board.getButton(cellIndex).setText(Character.toString(board.getGame().getCurrentPlayer().getPlayerSign()));
 
-        if (board.checkWin()) {
+        if (board.checkWin())
             button.getBoard().getGame().showMessage("Компьтер выиграл!");
-            board.emptyField();
-        } else
+        else
             board.getGame().passTurn();
     }
 }

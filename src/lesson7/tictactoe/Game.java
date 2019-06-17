@@ -6,8 +6,9 @@ class Game {
     private GameBoard board;
     private GamePlayer[] gamePlayers = new GamePlayer[2];
     private int playersTurn = 0;
+    private boolean endGame = false;
 
-    public Game() {
+    Game() {
         board = new GameBoard(this);
         initGame();
     }
@@ -16,6 +17,7 @@ class Game {
         gamePlayers[0] = new GamePlayer(true, 'X');
         gamePlayers[1] = new GamePlayer(false, 'O');
         playersTurn = 0;
+        endGame = false;
     }
 
     void passTurn() {
@@ -31,5 +33,17 @@ class Game {
 
     void showMessage(String message) {
         JOptionPane.showMessageDialog(board, message);
+    }
+
+    int getPlayersTurn() {
+        return playersTurn;
+    }
+
+    boolean isEndGame() {
+        return endGame;
+    }
+
+    void setEndGame() {
+        this.endGame = true;
     }
 }
