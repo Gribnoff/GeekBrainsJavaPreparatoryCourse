@@ -2,12 +2,12 @@ package lesson7.tictactoe;
 
 import javax.swing.*;
 
-public class GameButton extends JButton {
-    private int buttonIndex;
+class GameButton extends JButton {
     private GameBoard board;
+//    private int buttonIndex;
 
-    public GameButton(int buttonIndex, GameBoard board) {
-        this.buttonIndex = buttonIndex;
+    GameButton(int buttonIndex, GameBoard board) {
+//        this.buttonIndex = buttonIndex;
         this.board = board;
 
         int rowNum = buttonIndex / GameBoard.dimension;
@@ -17,7 +17,7 @@ public class GameButton extends JButton {
         addActionListener(new GameActionListener(rowNum, collNum, this));
     }
 
-    public GameBoard getBoard() {
+    GameBoard getBoard() {
         return board;
     }
 }

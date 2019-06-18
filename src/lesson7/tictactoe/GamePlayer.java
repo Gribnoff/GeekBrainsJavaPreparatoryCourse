@@ -1,19 +1,13 @@
 package lesson7.tictactoe;
 
-public class GamePlayer {
+class GamePlayer {
     private char playerSign;
-    private boolean realPlayer = true;
 
-    public GamePlayer(boolean realPlayer, char playerSign) {
+    GamePlayer(char playerSign) {
         this.playerSign = playerSign;
-        this.realPlayer = realPlayer;
     }
 
-    public char getPlayerSign() {
+    char getPlayerSign() {
         return playerSign;
-    }
-
-    public boolean isRealPlayer() {
-        return realPlayer;
     }
 }

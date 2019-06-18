@@ -5,8 +5,9 @@ import javax.swing.*;
 class Game {
     private GameBoard board;
     private GamePlayer[] gamePlayers = new GamePlayer[2];
-    private int playersTurn = 0;
+    private int playersTurn;
     private boolean endGame = false;
+    private boolean difficulty = false; //сложность: false - простой ИИ, true - с расчётом веса клеток
 
     Game() {
         board = new GameBoard(this);
@@ -14,8 +15,8 @@ class Game {
     }
 
     void initGame() {
-        gamePlayers[0] = new GamePlayer(true, 'X');
-        gamePlayers[1] = new GamePlayer(false, 'O');
+        gamePlayers[0] = new GamePlayer('X');
+        gamePlayers[1] = new GamePlayer('O');
         playersTurn = 0;
         endGame = false;
     }
@@ -35,9 +36,9 @@ class Game {
         JOptionPane.showMessageDialog(board, message);
     }
 
-    int getPlayersTurn() {
-        return playersTurn;
-    }
+//    int getPlayersTurn() {
+//        return playersTurn;
+//    }
 
     boolean isEndGame() {
         return endGame;
@@ -45,5 +46,13 @@ class Game {
 
     void setEndGame() {
         this.endGame = true;
+    }
+
+    boolean isDifficulty() {
+        return difficulty;
+    }
+
+    void setDifficulty(boolean difficulty) {
+        this.difficulty = difficulty;
     }
 }

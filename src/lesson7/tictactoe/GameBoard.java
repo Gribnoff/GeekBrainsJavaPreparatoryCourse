@@ -2,10 +2,11 @@ package lesson7.tictactoe;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 class GameBoard extends JFrame {
     static int dimension = 3;
-    static int winLine = 3;
+    private static int winLine = 3;
     static int cellSize = 125;
     private char[][] gameField;
     private GameButton[] gameButtons;
@@ -32,52 +33,61 @@ class GameBoard extends JFrame {
         JButton newGameButton = new JButton("Новая игра");
         newGameButton.addActionListener(e -> restartField());
 
-        JButton optionsButton = new JButton("Размер поля");
-        JPanel optionsFields = new JPanel(new GridLayout(2, 2));
+        JButton optionsButton = new JButton("Опции");
+        JPanel optionsFields = new JPanel(new GridLayout(3, 2));
+
         JLabel dimensionLabel = new JLabel("Размер поля");
         JComboBox<Integer> dimensionComboBox = new JComboBox<>(new Integer[]{3, 4, 5, 6, 7, 8, 9, 10});
         dimensionComboBox.setSelectedItem(dimension);
+
         JLabel winLineLabel = new JLabel("Победная линия");
-        JComboBox<Integer> winLineComboBox = new JComboBox<>(new Integer[]{3, 4, 5, 6, 7});
+        JComboBox<Integer> winLineComboBox = new JComboBox<>(new Integer[]{3});
         winLineComboBox.setSelectedItem(winLine);
+
+        dimensionComboBox.addActionListener(e -> {
+            ArrayList<Integer> winLines = new ArrayList<>();
+            int maxWinLine = (5 < (int)dimensionComboBox.getSelectedItem()) ? 5 : (int)dimensionComboBox.getSelectedItem();
+            for (int i = 3; i < maxWinLine + 1; i++) {
+                winLines.add(i);
+            }
+            winLineComboBox.setModel(new DefaultComboBoxModel(winLines.toArray()));
+        });
+
+        JLabel cellSizeLabel = new JLabel("Размер клеток");
+        JSlider cellSizeSlider = new JSlider(50, 200, 100);
+        cellSizeSlider.setMajorTickSpacing(25);
+        cellSizeSlider.setValue(cellSize);
+        cellSizeSlider.setPaintLabels(true);
 
         optionsFields.add(dimensionLabel);
         optionsFields.add(dimensionComboBox);
         optionsFields.add(winLineLabel);
         optionsFields.add(winLineComboBox);
+        optionsFields.add(cellSizeLabel);
+        optionsFields.add(cellSizeSlider);
 
+        JLabel sizeLabel = new JLabel(((Integer)cellSize).toString());
         optionsButton.addActionListener(e -> {
-            int result = JOptionPane.showConfirmDialog(null, optionsFields, "Размер поля", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int result = JOptionPane.showConfirmDialog(null, optionsFields, "Настройки игры", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
                 GameBoard.dimension = (int) dimensionComboBox.getSelectedItem();
                 GameBoard.winLine = (int) winLineComboBox.getSelectedItem();
+
+                GameBoard.cellSize = cellSizeSlider.getValue();
+                sizeLabel.setText(((Integer)cellSize).toString());
+
                 initField();
                 getGame().initGame();
             }
         });
 
-        JButton cellSizeButton = new JButton("Размер клеток");
-        JPanel cellSizeFields = new JPanel(new GridLayout(1, 2));
-        JLabel cellSizeLabel = new JLabel("Размер поля");
-        JComboBox<Integer> cellSizeComboBox = new JComboBox<>(new Integer[]{50, 75, 100, 125, 150, 200});
-        cellSizeComboBox.setSelectedItem(cellSize);
+        JCheckBox difficultyCheckBox = new JCheckBox("Hard mode");
+        difficultyCheckBox.addItemListener(e -> getGame().setDifficulty(difficultyCheckBox.isSelected()));
 
-        cellSizeFields.add(cellSizeLabel);
-        cellSizeFields.add(cellSizeComboBox);
-
-        cellSizeButton.addActionListener(e -> {
-            int result = JOptionPane.showConfirmDialog(null, cellSizeFields, "размер клеток", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.OK_OPTION) {
-                GameBoard.cellSize = (int) cellSizeComboBox.getSelectedItem();
-                initField();
-                getGame().initGame();
-            }
-        });
-
-        controlPanel.setLayout(new GridLayout(1, 2));
+        controlPanel.setLayout(new GridLayout(1, 3));
         controlPanel.add(newGameButton);
         controlPanel.add(optionsButton);
-        controlPanel.add(cellSizeButton);
+        controlPanel.add(difficultyCheckBox);
         controlPanel.setSize(cellSize * dimension, 150);
 
         JPanel gameFieldPanel = new JPanel();
@@ -100,7 +110,7 @@ class GameBoard extends JFrame {
         setVisible(true);
     }
 
-    void restartField() {
+    private void restartField() {
         getContentPane().removeAll();
         getGame().initGame();
         initField();
@@ -152,7 +162,7 @@ class GameBoard extends JFrame {
      * @param offsetY - сдвиг по вертикали
      * @return boolean есть ли строка или столбец, полностью заполненная игроком
      */
-    boolean checkLanes(char playerSymbol, int offsetX, int offsetY){
+    private boolean checkLanes(char playerSymbol, int offsetX, int offsetY){
         boolean rows, cols;
         for (int i = offsetY; i < winLine + offsetY; i++) {
             rows = true;
@@ -173,7 +183,7 @@ class GameBoard extends JFrame {
      * @param offsetY - сдвиг по вертикали
      * @return boolean есть ли строка или столбец, полностью заполненная игроком
      */
-    boolean checkDiagonals(char playerSymbol, int offsetX, int offsetY){
+    private boolean checkDiagonals(char playerSymbol, int offsetX, int offsetY){
         boolean right, left;
         right = true;
         left = true;
@@ -202,5 +212,9 @@ class GameBoard extends JFrame {
         for (GameButton gameButton : gameButtons) {
             gameButton.setEnabled(false);
         }
+    }
+
+    char[][] getGameField() {
+        return gameField;
     }
 }
