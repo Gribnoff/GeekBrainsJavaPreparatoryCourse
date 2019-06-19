@@ -23,9 +23,10 @@ class GameBoard extends JFrame {
     private void initField() {
         getContentPane().removeAll();
         setResizable(false);
-        setBounds(400, 300, cellSize * dimension, cellSize * dimension);
+        setBounds(0, 0, cellSize * dimension, cellSize * dimension);
         setTitle("Крестики-нолики");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         setLayout(new BorderLayout());
 
